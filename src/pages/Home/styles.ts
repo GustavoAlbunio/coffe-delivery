@@ -141,10 +141,9 @@ export const Actions = styled.div`
     }
   }
 
-  & > button {
+  a {
     background: ${(props) => props.theme['purple-500']};
     color: ${(props) => props.theme.white};
-    border: 0;
     padding: 0.625rem;
     border-radius: 6px;
     cursor: pointer;
