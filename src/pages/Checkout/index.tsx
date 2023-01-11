@@ -8,6 +8,7 @@ import {
   Plus,
   Trash,
 } from 'phosphor-react'
+import { useNavigate } from 'react-router-dom'
 
 import { useTheme } from 'styled-components'
 
@@ -25,6 +26,7 @@ import {
 
 export function Checkout() {
   const theme = useTheme()
+  const navigate = useNavigate()
 
   const {
     productsSelectd,
@@ -42,6 +44,10 @@ export function Checkout() {
       style: 'currency',
       currency: 'BRL',
     }).format(value)
+  }
+
+  function checkout() {
+    navigate('/success')
   }
 
   const hasProductInOrder = productsSelectd.length > 0
@@ -145,7 +151,9 @@ export function Checkout() {
             <span>Total</span>
             {hasProductInOrder ? formatMoney(summary + 3.5) : 'R$ 0,00'}
           </h1>
-          <button disabled={buttonConfirmDisabled}>Confirmar pedido</button>
+          <button disabled={buttonConfirmDisabled} onClick={checkout}>
+            Confirmar pedido
+          </button>
         </section>
       </OrderItems>
     </CkeckoutContainer>
