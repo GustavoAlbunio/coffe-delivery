@@ -8,9 +8,10 @@ import {
 
 import {
   addNewProductAction,
-  removeNewProductAction,
+  deleteProductAction,
+  removeProductAction,
 } from '../reducers/orders/actions'
-import { orderReducer } from '../reducers/orders/reducer'
+import { orderReducer, Product } from '../reducers/orders/reducer'
 
 import americanImg from '../assets/coffees/american.svg'
 import arabisImg from '../assets/coffees/arabic.svg'
@@ -42,8 +43,10 @@ type productsSelectedAndQuantitys = {
 
 interface OrderContextType {
   products: Coffee[]
+  productsSelectd: Product[]
   addProductInOrder: (product: Coffee) => void
   removeProductInOrder: (productId: number) => void
+  deleteProductInOrder: (productId: number) => void
   totalProductsSelected: number
   productsSelectedAndQuantitys: productsSelectedAndQuantitys
 }
@@ -185,12 +188,18 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
   }
 
   function removeProductInOrder(productId: number) {
-    dispatch(removeNewProductAction(productId))
+    dispatch(removeProductAction(productId))
   }
 
-  const totalProductsSelected = orderState.products.length
+  function deleteProductInOrder(productId: number) {
+    dispatch(deleteProductAction(productId))
+  }
 
-  const productsSelectedAndQuantitys = orderState.products.reduce(
+  const { products: productsSelectd } = orderState
+
+  const totalProductsSelected = productsSelectd.length
+
+  const productsSelectedAndQuantitys = productsSelectd.reduce(
     (acc: productsSelectedAndQuantitys, next) => {
       acc[next.id] = next.quantity
 
@@ -203,8 +212,10 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     <OrderContext.Provider
       value={{
         products,
+        productsSelectd,
         addProductInOrder,
         removeProductInOrder,
+        deleteProductInOrder,
         totalProductsSelected,
         productsSelectedAndQuantitys,
       }}

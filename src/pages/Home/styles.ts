@@ -43,7 +43,7 @@ export const CardList = styled.div`
 
 export const Card = styled.div`
   background: ${(props) => props.theme['gray-200']};
-  border-radius: 6px 36px 6px 36px;
+  border-radius: 6px 36px;
   padding: 0 1.25rem 1.25rem;
 
   display: flex;

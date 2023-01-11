@@ -2,7 +2,7 @@ import produce from 'immer'
 import { Coffee } from '../../contexts/OrderContext'
 import { ActionTypes } from './actions'
 
-interface Product extends Coffee {
+export interface Product extends Coffee {
   quantity: number
 }
 
@@ -49,13 +49,26 @@ export function orderReducer(state: OrderState, action: any) {
         const newQuantity = draft.products[productIndex].quantity - 1
 
         if (newQuantity === 0) {
-          draft.products.splice(productIndex)
+          draft.products.splice(productIndex, 1)
         } else {
           draft.products[productIndex] = {
             ...draft.products[productIndex],
             quantity: newQuantity,
           }
         }
+      })
+    }
+    case ActionTypes.DELETE_PRODUCT: {
+      const productIndex = state.products.findIndex(
+        (product) => action.payload.productId === product.id,
+      )
+
+      if (productIndex < 0) {
+        return state
+      }
+
+      return produce(state, (draft) => {
+        draft.products.splice(productIndex, 1)
       })
     }
 

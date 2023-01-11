@@ -4,6 +4,7 @@ import {
   ShoppingCart,
   Timer,
 } from 'phosphor-react'
+
 import { BannerContainer, Differential, Differentials, Main } from './styles'
 
 import mainImg from '../../../../assets/home.svg'
