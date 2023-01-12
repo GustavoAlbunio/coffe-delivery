@@ -24,7 +24,7 @@ export function Header() {
         </Location>
         <Cart to="/checkout">
           <ShoppingCart weight="fill" size={22} />
-          <span>{totalProductsSelected}</span>
+          {totalProductsSelected > 0 && <span>{totalProductsSelected}</span>}
         </Cart>
       </nav>
     </HeaderContainer>

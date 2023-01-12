@@ -1,5 +1,5 @@
 import produce from 'immer'
-import { Coffee } from '../../contexts/OrderContext'
+import { Address, Coffee, Payment } from '../../contexts/OrderContext'
 import { ActionTypes } from './actions'
 
 export interface Product extends Coffee {
@@ -8,7 +8,8 @@ export interface Product extends Coffee {
 
 interface OrderState {
   products: Product[]
-  address: any
+  address: Address | null
+  payment: Payment | null
 }
 
 export function orderReducer(state: OrderState, action: any) {
@@ -69,6 +70,16 @@ export function orderReducer(state: OrderState, action: any) {
 
       return produce(state, (draft) => {
         draft.products.splice(productIndex, 1)
+      })
+    }
+    case ActionTypes.ADD_ADDRESS: {
+      return produce(state, (draft) => {
+        draft.address = action.payload.address
+      })
+    }
+    case ActionTypes.ADD_PAYMENT: {
+      return produce(state, (draft) => {
+        draft.payment = action.payload.payment
       })
     }
 

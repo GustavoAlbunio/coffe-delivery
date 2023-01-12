@@ -7,9 +7,11 @@ import {
 } from 'react'
 
 import {
+  addAddressInOrderAction,
   addNewProductAction,
   deleteProductAction,
   removeProductAction,
+  addPaymentInOrderAction,
 } from '../reducers/orders/actions'
 import { orderReducer, Product } from '../reducers/orders/reducer'
 
@@ -37,6 +39,23 @@ export interface Coffee {
   tags: string[]
 }
 
+export interface Address {
+  cep: string
+  street: string
+  number: string
+  complement: string
+  neighborhood: string
+  city: string
+  uf: string
+}
+
+export interface Payment {
+  method: string
+  totalProducts: number
+  totalFreight: number
+  total: number
+}
+
 type productsSelectedAndQuantitys = {
   [key: string]: number
 }
@@ -44,11 +63,15 @@ type productsSelectedAndQuantitys = {
 interface OrderContextType {
   products: Coffee[]
   productsSelectd: Product[]
+  totalProductsSelected: number
+  productsSelectedAndQuantitys: productsSelectedAndQuantitys
+  address: Address | null
+  payment: Payment | null
   addProductInOrder: (product: Coffee) => void
   removeProductInOrder: (productId: number) => void
   deleteProductInOrder: (productId: number) => void
-  totalProductsSelected: number
-  productsSelectedAndQuantitys: productsSelectedAndQuantitys
+  addAddressInOrder: (address: Address) => void
+  addPaymentInOrder: (payment: Payment) => void
 }
 
 interface OrderContextProviderProps {
@@ -181,7 +204,12 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
   const [orderState, dispatch] = useReducer(orderReducer, {
     products: [],
     address: null,
+    payment: null,
   })
+
+  useEffect(() => {
+    console.log(orderState)
+  }, [orderState])
 
   function addProductInOrder(product: Coffee) {
     dispatch(addNewProductAction(product))
@@ -195,7 +223,15 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     dispatch(deleteProductAction(productId))
   }
 
-  const { products: productsSelectd } = orderState
+  function addAddressInOrder(address: Address) {
+    dispatch(addAddressInOrderAction(address))
+  }
+
+  function addPaymentInOrder(payment: Payment) {
+    dispatch(addPaymentInOrderAction(payment))
+  }
+
+  const { products: productsSelectd, address, payment } = orderState
 
   const totalProductsSelected = productsSelectd.length
 
@@ -213,11 +249,15 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
       value={{
         products,
         productsSelectd,
+        totalProductsSelected,
+        productsSelectedAndQuantitys,
         addProductInOrder,
         removeProductInOrder,
         deleteProductInOrder,
-        totalProductsSelected,
-        productsSelectedAndQuantitys,
+        addAddressInOrder,
+        addPaymentInOrder,
+        address,
+        payment,
       }}
     >
       {children}
