@@ -17,8 +17,7 @@ export function Header() {
         <img src={coffeDeliveryLogo} alt="" />
       </NavLink>
       <nav>
-        {/* TO DO: Remover o to */}
-        <Location to="/success">
+        <Location to="/">
           <MapPin weight="fill" size={20} />
           Porto Alegre, RS
         </Location>

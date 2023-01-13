@@ -16,6 +16,15 @@ export const Content = styled.div`
       line-height: 1.3;
       font-weight: 800;
     }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      h1 {
+        margin-bottom: 1rem;
+      }
+    }
   }
 `
 
@@ -33,13 +42,22 @@ export const Filters = styled.div`
     border: 1px solid ${(props) => props.theme['yellow-300']};
     cursor: pointer;
   }
+
+  .clear {
+    line-height: 0;
+    padding: 0.375rem;
+  }
 `
 
 export const CardList = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   margin: 3.375rem 0;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+  }
 `
 
 export const Card = styled.div`

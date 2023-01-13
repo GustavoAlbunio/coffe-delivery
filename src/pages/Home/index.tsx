@@ -1,9 +1,9 @@
-import { Minus, Plus, ShoppingCartSimple } from 'phosphor-react'
+import { Minus, Plus, ShoppingCartSimple, X } from 'phosphor-react'
 
 import { Content, Filters, CardList, Card, Actions } from './styles'
 
 import { Banner } from './components/Banner'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Coffee, OrderContext } from '../../contexts/OrderContext'
 import { NavLink } from 'react-router-dom'
 
@@ -15,6 +15,14 @@ export function Home() {
     productsSelectedAndQuantitys,
   } = useContext(OrderContext)
 
+  const [filter, setFilter] = useState('')
+
+  const productsFiltered = products.filter((products) => {
+    if (filter) return products.tags.includes(filter)
+
+    return true
+  })
+
   return (
     <>
       <Banner />
@@ -23,16 +31,21 @@ export function Home() {
         <header>
           <h1>Nossos cafés</h1>
           <Filters>
-            <span>Tradicional</span>
-            <span>Especial</span>
-            <span>Com leite</span>
-            <span>Alcóolico</span>
-            <span>Gelado</span>
+            <span onClick={() => setFilter('tradicional')}>Tradicional</span>
+            <span onClick={() => setFilter('especial')}>Especial</span>
+            <span onClick={() => setFilter('com leite')}>Com leite</span>
+            <span onClick={() => setFilter('alcoólico')}>Alcóolico</span>
+            <span onClick={() => setFilter('gelado')}>Gelado</span>
+            {filter && (
+              <span className="clear" onClick={() => setFilter('')}>
+                <X />
+              </span>
+            )}
           </Filters>
         </header>
 
         <CardList>
-          {products.map((product: Coffee) => (
+          {productsFiltered.map((product: Coffee) => (
             <Card key={product.id}>
               <img src={product.imageUrl} alt="" />
               <div>
