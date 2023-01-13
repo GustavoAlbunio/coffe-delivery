@@ -3,7 +3,8 @@ import styled from 'styled-components'
 export const SuccessContainer = styled.div`
   max-width: 1120px;
   width: 100%;
-  margin: 5rem auto 0;
+  padding: 0 1rem;
+  margin: 5rem auto 2rem;
 
   h1 {
     color: ${(props) => props.theme['yellow-500']};
@@ -47,6 +48,10 @@ export const SuccessContainer = styled.div`
 
     img {
       flex: 1;
+
+      @media (max-width: 1024px) {
+        display: none;
+      }
     }
   }
 `
@@ -76,5 +81,11 @@ export const Info = styled.section<DifferentialProps>`
     padding: 0.5rem;
     border-radius: 50%;
     box-sizing: initial;
+  }
+
+  @media (max-width: 1024px) {
+    & + section {
+      margin-top: 2rem;
+    }
   }
 `

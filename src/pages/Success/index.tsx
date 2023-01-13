@@ -10,7 +10,7 @@ import successImg from '../../assets/success.svg'
 export function Success() {
   const { payment, address } = useContext(OrderContext)
 
-  function showPaymentMethod(method: string) {
+  function showPaymentMethod(method: string | null) {
     switch (method) {
       case 'credit':
         return 'Cartão de crédito'
@@ -33,9 +33,9 @@ export function Success() {
             <div>
               <p>
                 Entrega em
-                <strong>{` ${address.street}, ${address.number}`}</strong>
+                <strong>{` ${address?.street}, ${address?.number}`}</strong>
               </p>
-              <span>{`${address.neighborhood} - ${address.city}, ${address.uf}`}</span>
+              <span>{`${address?.neighborhood} - ${address?.city}, ${address?.uf}`}</span>
             </div>
           </Info>
           <Info differentialColor="yellow">
@@ -49,7 +49,7 @@ export function Success() {
             <CurrencyDollar weight="fill" />
             <div>
               <p>Pagamento na entrega</p>
-              <strong>{showPaymentMethod(payment.method)}</strong>
+              <strong>{payment && showPaymentMethod(payment.method)}</strong>
             </div>
           </Info>
         </main>

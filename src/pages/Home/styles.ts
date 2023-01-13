@@ -4,6 +4,7 @@ export const Content = styled.div`
   max-width: 1120px;
   width: 100%;
   margin: 0 auto;
+  padding: 0 1rem;
 
   header {
     display: flex;
@@ -36,7 +37,7 @@ export const Filters = styled.div`
 
 export const CardList = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
   gap: 2rem;
   margin: 3.375rem 0;
 `

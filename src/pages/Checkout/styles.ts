@@ -3,12 +3,18 @@ import styled, { css } from 'styled-components'
 export const CkeckoutContainer = styled.div`
   max-width: 1120px;
   width: 100%;
+  padding: 0 1rem;
   margin: 0 auto;
 
   form {
     display: grid;
-    grid-template-columns: 640px 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 2rem;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+      margin-bottom: 1rem;
+    }
   }
 `
 

@@ -3,6 +3,7 @@ import { Minus, Plus, Trash } from 'phosphor-react'
 import { useNavigate } from 'react-router-dom'
 import { FormProvider, useForm } from 'react-hook-form'
 import * as zod from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { OrderContext } from '../../contexts/OrderContext'
 import { OrderForm } from './components/OrderForm'
@@ -10,13 +11,13 @@ import { OrderForm } from './components/OrderForm'
 import { CkeckoutContainer, OrderItems, Item, Actions } from './styles'
 
 const orderFormValidationSchema = zod.object({
-  cep: zod.string(),
-  street: zod.string(),
-  number: zod.string(),
+  cep: zod.string().regex(/^[0-9]{5}-[0-9]{3}$/, 'CEP inválido'),
+  street: zod.string().min(3),
+  number: zod.string().min(1),
   complement: zod.string(),
-  neighborhood: zod.string(),
-  city: zod.string(),
-  uf: zod.string(),
+  neighborhood: zod.string().min(3),
+  city: zod.string().min(2),
+  uf: zod.string().min(2),
   method: zod.string(),
 })
 
@@ -32,17 +33,21 @@ export function Checkout() {
     deleteProductInOrder,
     addAddressInOrder,
     addPaymentInOrder,
+    payment,
+    address,
   } = useContext(OrderContext)
 
   const orderForm = useForm<OrderFormData>({
+    resolver: zodResolver(orderFormValidationSchema),
     defaultValues: {
-      cep: '',
-      street: '',
-      number: '',
-      complement: '',
-      neighborhood: '',
-      city: '',
-      uf: '',
+      cep: address?.cep,
+      street: address?.street,
+      number: address?.number,
+      complement: address?.complement,
+      neighborhood: address?.neighborhood,
+      city: address?.city,
+      uf: address?.uf,
+      method: payment?.method,
     },
   })
 
@@ -106,22 +111,29 @@ export function Checkout() {
                     <div>
                       <div>
                         <button
+                          type="button"
                           onClick={() => removeProductInOrder(product.id)}
                         >
                           <Minus size={14} weight="bold" />
                         </button>
                         <span>{product.quantity}</span>
-                        <button onClick={() => addProductInOrder(product)}>
+                        <button
+                          type="button"
+                          onClick={() => addProductInOrder(product)}
+                        >
                           <Plus size={14} weight="bold" />
                         </button>
                       </div>
-                      <button onClick={() => deleteProductInOrder(product.id)}>
+                      <button
+                        type="button"
+                        onClick={() => deleteProductInOrder(product.id)}
+                      >
                         <Trash size={16} weight="bold" />
                         <span>Remover</span>
                       </button>
                     </div>
                   </Actions>
-                  <label htmlFor="">R$ 9,90</label>
+                  <label>{formatMoney(product.value * product.quantity)}</label>
                 </Item>
               ))}
             </div>

@@ -11,6 +11,18 @@ export const GlobalStyles = createGlobalStyle`
     outline: 0;
   }
 
+  @media (max-width: 1080px) {
+    html {
+      font-size: 93.75%;
+    }
+  }
+
+  @media (max-width: 720px) {
+    html {
+      font-size: 87.5%;
+    }
+  }
+
   body {
     background: ${(props) => props.theme['gray-100']};
     color: ${(props) => props.theme['gray-700']};

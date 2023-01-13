@@ -201,14 +201,28 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     },
   ])
 
-  const [orderState, dispatch] = useReducer(orderReducer, {
-    products: [],
-    address: null,
-    payment: null,
-  })
+  const [orderState, dispatch] = useReducer(
+    orderReducer,
+    {
+      products: [],
+      address: null,
+      payment: null,
+    },
+    () => {
+      const storedStateJSON = localStorage.getItem(
+        '@coffee-delivery:order-state-1.0.0',
+      )
+
+      if (storedStateJSON) {
+        return JSON.parse(storedStateJSON)
+      }
+    },
+  )
 
   useEffect(() => {
-    console.log(orderState)
+    const stateJSON = JSON.stringify(orderState)
+
+    localStorage.setItem('@coffee-delivery:order-state-1.0.0', stateJSON)
   }, [orderState])
 
   function addProductInOrder(product: Coffee) {

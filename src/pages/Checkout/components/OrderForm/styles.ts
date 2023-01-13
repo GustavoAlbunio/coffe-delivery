@@ -114,7 +114,8 @@ export const OrderFormContainer = styled.main`
 
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: stretch;
+
       gap: 0.75rem;
     }
   }
@@ -133,6 +134,7 @@ export const InputRadio = styled.label<InputRadioProps>`
   font-size: 0.75rem;
   position: relative;
   cursor: pointer;
+  text-align: center;
 
   display: flex;
   align-items: center;

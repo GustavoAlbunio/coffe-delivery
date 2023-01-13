@@ -9,9 +9,12 @@ import { BannerContainer, Differential, Differentials, Main } from './styles'
 
 import mainImg from '../../../../assets/home.svg'
 
+import backgroundOtherImg from '../../../../assets/background_home_other.png'
+
 export function Banner() {
   return (
     <BannerContainer>
+      <img src={backgroundOtherImg} alt="" />
       <Main>
         <main>
           <h1>Encontre o café perfeito para qualquer hora do dia</h1>

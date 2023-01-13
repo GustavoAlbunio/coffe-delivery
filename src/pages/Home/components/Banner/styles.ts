@@ -3,14 +3,20 @@ import styled from 'styled-components'
 import backgroundImg from '../../../../assets/background_home.png'
 
 export const BannerContainer = styled.div`
-  background: url(${backgroundImg});
+  & > img {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+    filter: blur(50px);
+  }
 `
 
 export const Main = styled.main`
   max-width: 1120px;
   width: 100%;
   margin: 0 auto;
-  padding: 5.75rem 0;
+  padding: 5.75rem 1rem;
 
   display: flex;
   align-items: center;
@@ -30,6 +36,12 @@ export const Main = styled.main`
       font-size: 1.25rem;
       line-height: 1.3;
       margin-top: 1rem;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    & > img {
+      display: none;
     }
   }
 `
