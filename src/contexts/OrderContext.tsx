@@ -215,6 +215,12 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
 
       if (storedStateJSON) {
         return JSON.parse(storedStateJSON)
+      } else {
+        return {
+          products: [],
+          address: null,
+          payment: null,
+        }
       }
     },
   )
